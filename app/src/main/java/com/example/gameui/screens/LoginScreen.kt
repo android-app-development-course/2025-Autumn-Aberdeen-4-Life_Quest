@@ -135,18 +135,14 @@ fun LoginScreen(navController: NavController) {
                     Spacer(modifier = Modifier.height(16.dp))
                     Button(
                         onClick = {
-                            if (username == "admin" && password == "admin") {
-                                navController.navigate("gameMain")
-                            } else {
-                                scope.launch {
-                                    val storedUsername = userPreferencesRepository.usernameFlow.first()
-                                    val storedPassword = userPreferencesRepository.passwordFlow.first()
+                            scope.launch {
+                                val storedUsername = userPreferencesRepository.usernameFlow.first()
+                                val storedPassword = userPreferencesRepository.passwordFlow.first()
 
-                                    if (username.isNotBlank() && username == storedUsername && password == storedPassword) {
-                                        navController.navigate("gameMain")
-                                    } else {
-                                        Toast.makeText(context, "用户名或密码错误", Toast.LENGTH_SHORT).show()
-                                    }
+                                if (username == storedUsername && password == storedPassword) {
+                                    navController.navigate("gameMain")
+                                } else {
+                                    Toast.makeText(context, "用户名或密码错误", Toast.LENGTH_SHORT).show()
                                 }
                             }
                         },
